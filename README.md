@@ -1,5 +1,14 @@
 # AtlasLoot
 AtlasLoot Turtle WoW Edition allows you to view loot from bosses/ enchants/ crafted items/ reputation rewards/ PvP rewards in game!
+
+## Arreglo para Turtle Wow en Español
+Por ahora hice un arreglo de emergencia para que funcione de esta forma
+Atlas-Español
+AtlasQuest-Español
+AtlasLoot-Ingles
+
+Trabajare para que la traduccion del AtlasLoot en español funcione correctamente para el Servidor SA de TurtleWOW
+
 ## Features of this fork
  - Option to show source and drop rate on item tooltips.
  - All professions sorted by slot/purpose.
