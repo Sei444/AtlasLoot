@@ -2,7 +2,7 @@
 AtlasLoot Turtle WoW Edition allows you to view loot from bosses/ enchants/ crafted items/ reputation rewards/ PvP rewards in game!
 
 ## Arreglo para Turtle Wow en Español
-Por ahora hice un arreglo de emergencia para que funcione de esta forma
+Hola soy Sei, por ahora hice un arreglo de emergencia para que funcione de esta forma
 Atlas-Español
 AtlasQuest-Español
 AtlasLoot-Ingles
