@@ -3,9 +3,9 @@ AtlasLoot Turtle WoW Edition allows you to view loot from bosses/ enchants/ craf
 
 ## Arreglo para Turtle Wow en Español
 Hola soy Sei, por ahora hice un arreglo de emergencia para que funcione de esta forma
-Atlas-Español
-AtlasQuest-Español
-AtlasLoot-Ingles
+- Atlas-Español
+- AtlasQuest-Español
+- AtlasLoot-Ingles
 
 Trabajare para que la traduccion del AtlasLoot en español funcione correctamente para el Servidor SA de TurtleWOW
 
