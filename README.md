@@ -1,13 +1,24 @@
 # AtlasLoot
 AtlasLoot Turtle WoW Edition allows you to view loot from bosses/ enchants/ crafted items/ reputation rewards/ PvP rewards in game!
 
-## Arreglo para Turtle Wow en Español
-Hola soy Sei, por ahora hice un arreglo de emergencia para que funcione de esta forma
-- Atlas-Español
-- AtlasQuest-Español
-- AtlasLoot-Ingles
+AtlasLoot Turtle WoW Edition te permite ver el botín de los jefes/encantamientos/objetos creados/recompensas de reputación/recompensas PvP en el juego.
 
-Trabajare para que la traduccion del AtlasLoot en español funcione correctamente para el Servidor SA de TurtleWOW
+## Fix para Turtle Wow en Español
+Hola soy Sei, pude arreglar los errores principales del AtlasLoot con las traducciones esES para el server SA (De esta forma no es necesario que lo jueguen en Ingles, el addon funciona con la version en español de TurtleWoW, aun asi si llega a salir errores, intentare darles solucion, ya que el servidor y sus traducciones se actualizan constantemente). Cabe recalcar que todo mi codigo es un arreglo al codigo de Otari98 y a los que contribuyeron, asi que les recomiendo instalar los complementos del AtlasLoot de estos enlaces:
+
+- [Atlas]-Español
+(https://github.com/Otari98/Atlas)
+
+- [AtlasQuest]-Español
+(https://github.com/Otari98/AtlasQuest)
+
+- [AtlasLoot]-Español
+(https://github.com/Sei444/AtlasLoot)
+
+Intentare actualizar de forma seguida la traduccion del AtlasLoot en español para que asi
+funcione correctamente en el Servidor SA de TurtleWOW.
+
+Sin mas les dejo con comentarios de Otari98
 
 ## Features of this fork
  - Option to show source and drop rate on item tooltips.
@@ -33,6 +44,7 @@ Trabajare para que la traduccion del AtlasLoot en español funcione correctament
 
 
 ![333](https://github.com/user-attachments/assets/1d3164bf-438a-4268-85c4-35782e59ec46)
+
 # Thanks to original author and all contributors
  - Daviesh (original author)
  - Pompa (Turtle WoW World Bosses)
@@ -41,3 +53,4 @@ Trabajare para que la traduccion del AtlasLoot en español funcione correctament
  - Shagu (pfUI update code)
  - Lexie (Turtle WoW fixes/updates)
  - Otari (overhaul/revamp, menu changes, bugfixes/updates)
+ - Sei (Turtle WoW, bugfixes, updates transations)
