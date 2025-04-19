@@ -214,37 +214,37 @@ function AtlasLoot_OnVariablesLoaded()
 		AtlasLootItemsFrame:Hide();
 	end
 	--Check and migrate old WishList entry format to the newer one
-	if version < 40301 then
-		--Check if we really need to do a migration since it will load all modules
-		--We also create a helper table here which store IDs that need to search for
-		local idsToSearch = {};
-		for i = 1, table.getn(AtlasLootCharDB["WishList"]) do
-			if (type(AtlasLootCharDB["WishList"][i][1]) == "number") then
-				if (AtlasLootCharDB["WishList"][i][1] > 0 and not AtlasLootCharDB["WishList"][i][5]) then
-					tinsert(idsToSearch, i, AtlasLootCharDB["WishList"][i][1]);
-				end
-			end
-		end
-		if table.getn(idsToSearch) > 0 then
-			--Let's do this
-			for _, dataSource in ipairs(AtlasLoot_SearchTables) do
-				if AtlasLoot_Data[dataSource] then
-					for dataID, lootTable in pairs(AtlasLoot_Data[dataSource]) do
-						for _, entry in ipairs(lootTable) do
-							for k, v in pairs(idsToSearch) do
-								if(entry[1] == v)then
-									AtlasLootCharDB["WishList"][k][5] = dataID.."|"..dataSource;
-									break;
-								end
-							end
-						end
-					end
-				end
-			end
-		end
-		AtlasLootCharDB.AutoQuery = false;
-		AtlasLootOptions_Init();
-	end
+	-- if version < 40301 then
+	-- 	--Check if we really need to do a migration since it will load all modules
+	-- 	--We also create a helper table here which store IDs that need to search for
+	-- 	local idsToSearch = {};
+	-- 	for i = 1, table.getn(AtlasLootCharDB["WishList"]) do
+	-- 		if (type(AtlasLootCharDB["WishList"][i][1]) == "number") then
+	-- 			if (AtlasLootCharDB["WishList"][i][1] > 0 and not AtlasLootCharDB["WishList"][i][5]) then
+	-- 				tinsert(idsToSearch, i, AtlasLootCharDB["WishList"][i][1]);
+	-- 			end
+	-- 		end
+	-- 	end
+	-- 	if table.getn(idsToSearch) > 0 then
+	-- 		--Let's do this
+	-- 		for _, dataSource in ipairs(AtlasLoot_SearchTables) do
+	-- 			if AtlasLoot_Data[dataSource] then
+	-- 				for dataID, lootTable in pairs(AtlasLoot_Data[dataSource]) do
+	-- 					for _, entry in ipairs(lootTable) do
+	-- 						for k, v in pairs(idsToSearch) do
+	-- 							if(entry[1] == v)then
+	-- 								AtlasLootCharDB["WishList"][k][5] = dataID.."|"..dataSource;
+	-- 								break;
+	-- 							end
+	-- 						end
+	-- 					end
+	-- 				end
+	-- 			end
+	-- 		end
+	-- 	end
+	--	AtlasLootCharDB.AutoQuery = false;
+	-- 	AtlasLootOptions_Init();
+	-- end
 	--Adds an AtlasLoot button to the Feature Frame in Cosmos
 	if(EarthFeature_AddButton) then
 		EarthFeature_AddButton(
@@ -360,14 +360,14 @@ function AtlasLootOptions_Fresh()
 	AtlasLootCharDB.Opaque = false;
 	AtlasLootCharDB.ItemIDs = false;
 	AtlasLootCharDB.FirstTime = true;
-	AtlasLootCharDB.ItemSpam = true;
+	AtlasLootCharDB.ItemSpam = false;
 	AtlasLootCharDB.MinimapButton = true;
 	AtlasLootCharDB.MinimapButtonPosition = 315;
 	AtlasLootCharDB.MinimapButtonRadius = 78;
 	AtlasLootCharDB.HidePanel = false;
 	AtlasLootCharDB.LastBoss = "DUNGEONSMENU1";
 	AtlasLootCharDB.LastBossText = AL["Dungeons & Raids"];
-	AtlasLootCharDB.AutoQuery = false;
+	-- AtlasLootCharDB.AutoQuery = false;
 	AtlasLootCharDB.PartialMatching = true;
 end
 
@@ -1719,19 +1719,19 @@ function AtlasLoot_OpenMenu(menuName)
 	AtlasLootDefaultFrame_SelectedTable:Show();
 	AtlasLootCharDB.LastBoss = this.lootpage;
 	AtlasLootCharDB.LastBossText = menuName;
-	if menuName == "Crafting" then
+	if menuName == AL["Crafting"] then
 		AtlasLoot_ShowItemsFrame("CRAFTINGMENU", "dummy", "dummy", pFrame)
-	elseif menuName == "PvP Rewards" then
+	elseif menuName == AL["PvP Rewards"] then
 		AtlasLoot_ShowItemsFrame("PVPMENU", "dummy", "dummy", pFrame)
-	elseif menuName == "World Events" then
+	elseif menuName == AL["World Events"] then
 		AtlasLoot_ShowItemsFrame("WORLDEVENTMENU", "dummy", "dummy", pFrame)
-	elseif menuName == "Collections" then
+	elseif menuName == AL["Collections"] then
 		AtlasLoot_ShowItemsFrame("SETMENU", "dummy", "dummy", pFrame)
-	elseif menuName == "Factions" then
+	elseif menuName == AL["Factions"] then
 		AtlasLoot_ShowItemsFrame("REPMENU", "dummy", "dummy", pFrame)
-	elseif menuName == "World Bosses" then
+	elseif menuName == AL["World Bosses"] then
 		AtlasLoot_ShowItemsFrame("WORLDBOSSMENU", "dummy", "dummy", pFrame)
-	elseif menuName == "Dungeons & Raids" then
+	elseif menuName == AL["Dungeons & Raids"] then
 		AtlasLoot_ShowItemsFrame("DUNGEONSMENU1", "dummy", "dummy", pFrame)
 	end
 	CloseDropDownMenus()
@@ -2070,8 +2070,8 @@ function AtlasLootOptions_ResetPosition()
 end
 
 function AtlasLootOptions_DefaultSettings()
-	AtlasLootCharDB.SafeLinks = true;
-	AtlasLootCharDB.AllLinks = false;
+	AtlasLootCharDB.SafeLinks = false;
+	AtlasLootCharDB.AllLinks = true;
 	AtlasLootCharDB.DefaultTT = true;
 	AtlasLootCharDB.LootlinkTT = false;
 	AtlasLootCharDB.ItemSyncTT = false;
@@ -2082,7 +2082,7 @@ function AtlasLootOptions_DefaultSettings()
 	AtlasLootCharDB.ItemSpam = true;
 	AtlasLootCharDB.MinimapButton = true;
 	AtlasLootCharDB.HidePanel = false;
-	AtlasLootCharDB.AutoQuery = false;
+	-- AtlasLootCharDB.AutoQuery = false;
 	AtlasLootCharDB.PartialMatching = true;
 	AtlasLootCharDB.LastBoss = "DUNGEONSMENU1";
 	AtlasLootCharDB.LastBossText = AL["Dungeons & Raids"];
@@ -2198,6 +2198,7 @@ AtlasLoot_HewdropDown = {
 			{{ AL["[RAID] Emerald Sanctum"], "EmeraldSanctum", "Submenu" },},
 			{{ AL["[RAID] Temple of Ahn'Qiraj"], "TempleofAQ", "Submenu" },},
 			{{ AL["[RAID] Naxxramas"], "Naxxramas", "Submenu" },},
+            {{ AL["[RAID] Upper Karazhan Halls"], "UpperKara", "Submenu" },},
 		},
 	},
 	{[AL["World Bosses"]] = {
@@ -2431,11 +2432,13 @@ AtlasLoot_HewdropDown_SubTables = {
 		{ AL["Trash Mobs"], "BWLTrashMobs" },
 	},
 	["Deadmines"] = {
+        { AL["Jared Voss"], "DMJaredVoss" },
 		{ AL["Rhahk'Zor"], "DMRhahkZor" },
 		{ AL["Miner Johnson"].." ("..AL["Rare"]..")", "DMMinerJohnson" },
 		{ AL["Sneed"], "DMSneed" },
 		{ AL["Sneed's Shredder"], "DMSneedsShredder" },
 		{ AL["Gilnid"], "DMGilnid" },
+        { AL["Masterpiece Harvester"], "DMHarvester" },
 		{ AL["Mr. Smite"], "DMMrSmite" },
 		{ AL["Cookie"], "DMCookie" },
 		{ AL["Captain Greenskin"], "DMCaptainGreenskin" },
@@ -2493,6 +2496,7 @@ AtlasLoot_HewdropDown_SubTables = {
 	},
 	["SMGraveyard"] = {
 		{ AL["Interrogator Vishas"], "SMVishas" },
+        { AL["Duke Dreadmoore"], "SMDukeDreadmoore" },
 		{ AL["Scorn"].." ("..AL["Scourge Invasion"]..")", "SMScorn" },
 		{ AL["Ironspine"].." ("..AL["Rare"]..")", "SMIronspine" },
 		{ AL["Azshir the Sleepless"].." ("..AL["Rare"]..")", "SMAzshir" },
@@ -2502,11 +2506,13 @@ AtlasLoot_HewdropDown_SubTables = {
 	},
 	["SMLibrary"] = {
 		{ AL["Houndmaster Loksey"], "SMHoundmasterLoksey" },
+        { AL["Brother Wystan"], "SMBrotherWystan" },
 		{ AL["Arcanist Doan"], "SMDoan" },
 		{ AL["Trash Mobs"], "SMLTrash" },
 	},
 	["SMArmory"] = {
 		{ AL["Herod"], "SMHerod" },
+        { AL["Armory Quartermaster Daghelm"], "SMQuartermaster" },
 		{ AL["Trash Mobs"], "SMATrash" },
 	},
 	["SMCathedral"] = {
@@ -2548,6 +2554,7 @@ AtlasLoot_HewdropDown_SubTables = {
 		{ AL["Arugal's Voidwalker"], "SFKArugalsVoidwalker" },
 		{ AL["Wolf Master Nandos"], "SFKWolfMasterNandos" },
 		{ AL["Archmage Arugal"], "SFKArchmageArugal" },
+        { AL["Prelate Ironmane"], "SFKPrelate"},
 		{ AL["Trash Mobs"], "SFKTrash" },
 	},
 	["TheStockade"] = {
@@ -2760,12 +2767,14 @@ AtlasLoot_HewdropDown_SubTables = {
 		{ AL["Lord Cobrahn"], "WCLordCobrahn" },
 		{ AL["Lady Anacondra"], "WCLadyAnacondra" },
 		{ AL["Kresh"], "WCKresh" },
+		{ AL["Deviate Faerie Dragon"].." ("..AL["Rare"]..")", "WCDeviateFaerieDragon" },
+        { AL["Zandara Windhoof"], "WCZandara" },
 		{ AL["Lord Pythas"], "WCLordPythas" },
 		{ AL["Skum"], "WCSkum" },
+        { AL["Vangros"], "WCVangros" },
 		{ AL["Lord Serpentis"], "WCLordSerpentis" },
 		{ AL["Verdan the Everliving"], "WCVerdan" },
 		{ AL["Mutanus the Devourer"], "WCMutanus" },
-		{ AL["Deviate Faerie Dragon"].." ("..AL["Rare"]..")", "WCDeviateFaerieDragon" },
 		{ AL["Trash Mobs"], "WCTrash" },
 	},
 	["ZulFarrak"] = {
@@ -2793,6 +2802,18 @@ AtlasLoot_HewdropDown_SubTables = {
 		{ AL["Moroes"], "LKHMoroes" },
 		{ AL["Trash Mobs"], "LKHTrash" },
 		{ AL["LKH Enchants"], "LKHEnchants" },
+	},
+    ["UpperKara"] = {
+		{ AL["Keeper Gnarlmoon"], "UKHGnarlmoon" },
+		{ AL["Ley-Watcher Incantagos"], "UKHIncantagos" },
+		{ AL["Anomalus"], "UKHAnomalus" },
+		{ AL["Echo of Medivh"], "UKHEcho" },
+		{ AL["King (Chess fight)"], "UKHKing" },
+		{ AL["Sanv Tas'dal"], "UKHSanvTasdal" },
+		{ AL["Kruul"], "UKHKruul" },
+		{ AL["Rupturan the Broken"], "UKHRupturan" },
+		{ AL["Mephistroth"], "UKHMephistroth" },
+		{ AL["Trash Mobs"], "UKHTrash" },
 	},
 	["WorldBosses"] = {
 		{ AL["Azuregos"], "AAzuregos" },
@@ -3148,7 +3169,7 @@ function AtlasLootItem_OnEnter()
 			getglobal("AtlasLootTooltipTextRight"..i):SetText("");
 		end
 	end
-	if (this.itemID ~= 0) then
+	if (this.itemID and this.itemID ~= 0) then
 		if string.sub(this.itemID, 1, 1) == "s" then
 			isItem = false;
 			isEnchant = false;

@@ -1,10 +1,9 @@
 ## Interface: 11200
-## Title: AtlasLoot |cff7fff7f TurtleWOW|r
+## Title: AtlasLoot (Adapted by Sei)|cff7fff7f TurtleWOW|r
 ## Notes: Shows possible loot from dungeon bosses and other sources.
-## Author: Shagu (pfUI update code), Lexie (Turtle WoW fixes/updates), Otari (overhaul/revamp, menu changes, bugfixes/updates)
+## Author: Shagu (pfUI update code), Lexie (Turtle WoW fixes/updates), Otari (overhaul/revamp, menu changes, bugfixes/updates), Sei(SA adaptation/translation)
 ## LegacyAuthor: Daviesh, Pompa (Turtle WoW World Bosses), Xerron (Turtle WoW World Bosses), Gurky (Turtle WoW 1.16/1.16.1 Dungeons)
-## Version: 3.0.9
-## SavedVariables: AtlasLoot_updateavailable
+## Version: 3.1.4
 ## SavedVariablesPerCharacter: AtlasLootCharDB
 ## OptionalDeps: Alphamap, AtlasLoader, LootLink, ItemSync, HewdropLib, Ace2, EquipCompare, EQCompare
 
@@ -17,7 +16,6 @@ Libs\AceAddon\AceAddon-2.0.lua
 Libs\Hewdrop\Hewdrop-2.0.lua
 
 Locale\Locale.xml
-# Bossnames\BossNames.xml
 Sets\Sets.xml
 Crafting\Crafting.xml
 PvP\PvP.xml
