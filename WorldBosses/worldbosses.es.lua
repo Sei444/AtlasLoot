@@ -216,6 +216,8 @@ AtlasLoot_Data["AtlasLootWBItems"] = {
 		{ 60491, "inv_misc_orb_05", "=q0=La Piedra del Muu", "#m33#", "100%" },
 		{ 0, "", "", "", "" },
 		{ 51261, "inv_misc_bell_01", "=q2=Vaquita", "#e15#", "100%" },
+		{ 0, "INV_Misc_Food_16", "=q4=Limona the Killer", "#e15#", "No sabemos para que sirve pero ahi esta." },
+
 	};
 	Clackora = {
 		{ 55494, "inv_misc_birdbeck_02", "=q4=La Pinza Abisal", "=ds=#h3#, #w13#" },
