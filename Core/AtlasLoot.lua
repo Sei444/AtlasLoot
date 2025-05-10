@@ -24,7 +24,7 @@ local AL = AceLibrary("AceLocale-2.2"):new("AtlasLoot");
 local ver = string.gsub(GetAddOnMetadata("AtlasLoot", "Version"), "%.", "0")
 _,_, ver = string.find(ver, "(%d+)")
 local version = tonumber(ver)
-ATLASLOOT_VERSION = "|cffFF8400AtlasLoot TW Edition v"..GetAddOnMetadata("AtlasLoot", "Version").."|r";
+ATLASLOOT_VERSION = "|cffFF8400AtlasLoot TW-SA (by Sei v"..GetAddOnMetadata("AtlasLoot", "Version")..")|r";
 
 --Compatibility with old EquipCompare/EQCompare
 ATLASLOOT_OPTIONS_EQUIPCOMPARE = AL["Use EquipCompare"];
@@ -109,6 +109,149 @@ AtlasLoot_MenuList = {
 	"WORLDBOSSMENU",
 	"JEWELCRAFTMENU"
 };
+
+-- 1. Función para crear el frame de información
+local function CreatePhaseInfoFrame()
+    if not AtlasLootDefaultFrame then return nil end
+    
+    local frame = CreateFrame("Frame", "AtlasLootPhaseInfoFrame", AtlasLootDefaultFrame)
+    frame:SetWidth(300) -- Usamos SetWidth/SetHeight en lugar de SetSize
+    frame:SetHeight(650)
+    frame:SetPoint("LEFT", AtlasLootDefaultFrame, "RIGHT", 10, 0)
+    frame:SetFrameStrata("HIGH")
+
+    --Codigo para mover el frame (opcional)
+	--[[frame:EnableMouse(true)
+    frame:SetMovable(true)
+    frame:RegisterForDrag("LeftButton")
+    frame:SetScript("OnDragStart", function()
+        frame:StartMoving()
+    end)
+    
+    frame:SetScript("OnDragStop", function()
+        frame:StopMovingOrSizing()
+    end)
+    
+    frame:Hide() ]]
+    frame:Hide()
+    
+    -- Background (exactamente como el frame principal)
+    frame:SetBackdrop({
+        bgFile = "Interface\\DialogFrame\\UI-DialogBox-Background",
+        edgeFile = "Interface\\DialogFrame\\UI-DialogBox-Border",
+        tile = true,
+        tileSize = 25,
+        edgeSize = 25,
+        insets = {left = 11, right = 12, top = 12, bottom = 11}
+    })
+    
+    -- Title
+    local title = frame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+    title:SetPoint("TOP", 0, -15)
+    title:SetText("Información de Fases")
+    
+    -- Content
+    local content = frame:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
+    content:SetPoint("TOPLEFT", 25, -45)
+    content:SetPoint("BOTTOMRIGHT", -25, 25)
+    content:SetJustifyH("LEFT")
+    frame.Content = content
+    
+    -- Close button (como el frame principal)
+    local closeBtn = CreateFrame("Button", nil, frame, "UIPanelCloseButton")
+    closeBtn:SetPoint("TOPRIGHT", -4, -4)
+    closeBtn:SetScript("OnClick", function() frame:Hide() end)
+    
+    return frame
+end
+
+-- 2. Función para mostrar/ocultar
+function AtlasLoot_TogglePhaseInfo()
+    if not AtlasLootPhaseInfoFrame then
+        AtlasLootPhaseInfoFrame = CreatePhaseInfoFrame()
+        if not AtlasLootPhaseInfoFrame then return end
+    end
+    
+    if AtlasLootPhaseInfoFrame:IsShown() then
+        AtlasLootPhaseInfoFrame:Hide()
+    else
+        AtlasLootPhaseInfoFrame:Show()
+        UpdatePhaseInfoText()
+    end
+end
+
+-- 3. Función para actualizar el texto (EDITA ESTO)
+function UpdatePhaseInfoText()
+    if not AtlasLootPhaseInfoFrame or not AtlasLootPhaseInfoFrame.Content then return end
+    
+    -- ==============================================
+    -- ¡DEBO EDITAR ESTE TEXTO MANUALMENTE EN CADA FASE!
+    local infoText = [[
+		Hola soy |cFF00FF00Sei|r, |cFFFFFFFFse que muchos items de (|cFFFF0000WorldBosses|r/|cFFFF0000Jefes del Mundo|r) no muestran su información. 
+		Descuiden, esto es normal. Los items se desbloquearán cuando un jugador lo |cFFFFD700"OBTENGA"|r (que el boss se lo dropee). 
+		
+		|cFFFFFFFF¿Por qué pasa esto?|r El servidor, al ser un |cFFFF0000Fresh|r (servidor desde 0), no tiene precargados algunos items. 
+		Verán cómo se desbloquean según el |cFF00FF00calendario de Turtle WoW Latam|r (¡y alguien obtenga ese item!). 
+		
+		|cFF00FF00Contenido Disponible:|r
+		|cFF00FF00[O] Fase 0 (Abril)|r
+		|cFF00FF00• |r|cFFFFFFFFMazmorras Base y especiales de TW|r
+
+		|cFF0070DD■ Fase Actual:|r 
+		|cFF00FF00[O] Fase 1: (Mayo-Junio)|r
+		|cFF00FF00Bandas: |r
+		|cFF00FF00• |r|cFFFFFFFFGuarida de Onyxia|r
+		|cFF00FF00• |r|cFFFFFFFFNúcleo de Magma|r
+		|cFF00FF00Jefes del mundo:|r
+		|cFF00FF00• |r|cFFFFFFFFConcavius|r
+		
+		|cFF00FF00Próximamente:|r
+		|cFFFF0000[X] Fase 2: (Julio-Septiembre)|r
+		|cFF00FF00Bandas: |r
+		|cFFFF0000• |r|cFFFFFFFFGuarida de Alanegra|r
+		|cFFFF0000• |r|cFFFFFFFFKarazhan Inferior|r
+		|cFF00FF00Jefes del Mundo: |r
+		|cFFFF0000• |r|cFFFFFFFFKazzak|r
+		|cFFFF0000• |r|cFFFFFFFFCazador Oscuro de Karazhan|r
+		
+		|cFFFF0000[X] Fase 3: (Octubre-Diciembre)|r
+		|cFF00FF00Bandas: |r
+		|cFFFF0000• |r|cFFFFFFFFZul'gurub|r
+		|cFFFF0000• |r|cFFFFFFFFSantuario Esmeralda|r
+		|cFF00FF00Jefes del Mundo: |r
+		|cFFFF0000• |r|cFFFFFFFFEmeris|r
+		|cFFFF0000• |r|cFFFFFFFFLethion|r
+		|cFFFF0000• |r|cFFFFFFFFTaerar|r
+		|cFFFF0000• |r|cFFFFFFFFYsondre|r
+		|cFFFF0000• |r|cFFFFFFFFAzuregos|r
+		]];
+		
+		-- ==============================================
+    -- ==============================================
+    
+    AtlasLootPhaseInfoFrame.Content:SetText(infoText)
+end
+
+-- 4. Configuración inicial segura
+local initFrame = CreateFrame("Frame")
+initFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+initFrame:SetScript("OnEvent", function()
+    -- Esperar a que AtlasLoot esté listo
+    if not AtlasLootDefaultFrame then return end
+    
+    -- Crear el botón si no existe
+    if not AtlasLootDefaultFrame_TogglePhaseButton then
+        local btn = CreateFrame("Button", nil, AtlasLootDefaultFrame, "UIPanelButtonTemplate")
+        btn:SetWidth(100)
+        btn:SetHeight(22)
+        btn:SetPoint("TOPRIGHT", AtlasLootDefaultFrame_Atlas, "TOPLEFT", -5, 0)
+        btn:SetText("Info Fases")
+        btn:SetScript("OnClick", AtlasLoot_TogglePhaseInfo)
+    else
+        AtlasLootDefaultFrame_TogglePhaseButton:SetScript("OnClick", AtlasLoot_TogglePhaseInfo)
+    end
+end)
+
 
 --[[
 AtlasLootDefaultFrame_OnShow:
@@ -3702,41 +3845,59 @@ function AtlasLoot_AddContainerItemTooltip(frame ,itemID)
 end
 
 function AtlasLoot_ContainerItem_OnClick(arg1)
-	local itemID = this:GetID()
-	local name, link, quality, _, _, _, _, _, tex = GetItemInfo(itemID)
-	local _, _, _, color = GetItemQualityColor(quality)
-	tex = string.gsub(tex, "Interface\\Icons\\", "")
-	local extra = this.extraInfo
-	local lootpage, dataSource
-	if lastSelectedButton then
-		lootpage = lastSelectedButton.lootpage
-		dataSource = lastSelectedButton.dataSource
-	end
-	if IsShiftKeyDown() and arg1 == "LeftButton" then
-		if AtlasLootCharDB.AllLinks then
-			if WIM_EditBoxInFocus then
-				WIM_EditBoxInFocus:Insert("\124"..string.sub(color, 2).."|Hitem:"..itemID.."\124h["..name.."]|h|r");
-			elseif ChatFrameEditBox:IsVisible() then
-				ChatFrameEditBox:Insert("\124"..string.sub(color, 2).."|Hitem:"..itemID.."\124h["..name.."]|h|r");
-			end
-		end
-	elseif(IsControlKeyDown() and name) then
-		DressUpItemLink(link);
-	elseif(IsAltKeyDown() and (itemID ~= 0)) then
-		if lootpage then
-			AtlasLoot_AddToWishlist(itemID, tex, name, extra, lootpage.."|"..dataSource)
-		elseif AtlasLootItemsFrame.refresh then
-			local dataID = AtlasLootItemsFrame.refresh[1]
-			local dataSource = AtlasLootItemsFrame.refresh[2]
-			if dataID == "WishList" then
-				AtlasLoot_DeleteFromWishList(this.itemID);
-			elseif dataID == "SearchResult" then
-				AtlasLoot_AddToWishlist(AtlasLoot:GetOriginalDataFromSearchResult(itemID));
-			else
-				AtlasLoot_AddToWishlist(itemID, tex, name, extra, dataID.."|"..dataSource);
-			end
-		end
-	end
+    local itemID = this:GetID()
+    local name, link, quality, _, _, _, _, _, tex = GetItemInfo(itemID)
+    
+    -- Manejo seguro de textura
+    local texturePath = ""
+    if tex then
+        texturePath = string.gsub(tex, "Interface\\Icons\\", "")
+    else
+        -- Textura por defecto si no se encuentra (ícono de interrogación)
+        texturePath = "INV_Misc_QuestionMark"
+    end
+    
+    -- Manejo seguro de color
+    local color
+    if quality and GetItemQualityColor(quality) then
+        _, _, _, color = GetItemQualityColor(quality)
+    else
+        color = "|cFF9d9d9d"  -- Color gris por defecto
+    end
+    
+    local extra = this.extraInfo
+    local lootpage, dataSource
+    if lastSelectedButton then
+        lootpage = lastSelectedButton.lootpage
+        dataSource = lastSelectedButton.dataSource
+    end
+    
+    if IsShiftKeyDown() and arg1 == "LeftButton" and name then
+        if AtlasLootCharDB.AllLinks then
+            local itemLink = color.."|Hitem:"..itemID.."|h["..name.."]|h|r"
+            if WIM_EditBoxInFocus then
+                WIM_EditBoxInFocus:Insert(itemLink)
+            elseif ChatFrameEditBox:IsVisible() then
+                ChatFrameEditBox:Insert(itemLink)
+            end
+        end
+    elseif IsControlKeyDown() and link then
+        DressUpItemLink(link)
+    elseif IsAltKeyDown() and itemID ~= 0 then
+        if lootpage then
+            AtlasLoot_AddToWishlist(itemID, texturePath, name or "Unknown Item", extra or "", lootpage.."|"..(dataSource or ""))
+        elseif AtlasLootItemsFrame.refresh then
+            local dataID = AtlasLootItemsFrame.refresh[1]
+            local dataSource = AtlasLootItemsFrame.refresh[2]
+            if dataID == "WishList" then
+                AtlasLoot_DeleteFromWishList(this.itemID)
+            elseif dataID == "SearchResult" then
+                AtlasLoot_AddToWishlist(AtlasLoot:GetOriginalDataFromSearchResult(itemID))
+            else
+                AtlasLoot_AddToWishlist(itemID, texturePath, name or "Unknown Item", extra or "", (dataID or "").."|"..(dataSource or ""))
+            end
+        end
+    end
 end
 
 --[[

@@ -135,10 +135,7 @@ AtlasLoot_Data["AtlasLootWBItems"] = {
 		{ 51732, "inv_misc_cape_11", "=q4=Silken Mantle of Dying Hope", "=ds=#s4#", "20%" },
 		{ 51731, "inv_misc_cape_01", "=q4=Venom Covered Cloak", "=ds=#s4#", "20%" },
 		{ 51730, "inv_misc_cape_18", "=q4=Shawl of Nerubian Silk", "=ds=#s4#", "20%" },
-		{ 0, "", "", "", "" },
-		{ 0, "", "", "", "" },
-		{ 0, "", "", "", "" },
-		{ 0, "", "", "", "" },
+
 		{ 12717, "inv_scroll_05", "=q4=Plans: Lionheart Helm", "=ds=#sr# =so1=300 =so2=320 =so3=330 =so4=340", "5%" },
 		{ 12640, "inv_helmet_36", "=q4=Lionheart Helm", "=ds=#s1#, #a4#" },
 		{ 0, "", "", "", "" },
